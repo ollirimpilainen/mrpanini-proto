@@ -7,15 +7,14 @@ Klikattava HTML-prototyyppi uudistetusta sivusta https://mrpanini.fi/jalleenmyyj
 - Sisältö on edelleen yhdellä sivulla, mutta se on jaettu kolmeen myyntitapaan: **Tarjoilu myyntipisteessä**, **Lämmitettävät pitat** ja **Kaupan hyllyyn**. Jokaisella on sama runko: sopii sinulle, jos… / mitä tarvitset / näin valmistat tai myyt / kuva / oma CTA.
 - Yhteiset asiat (hyödyt, tilaus ja toimitus, markkinointimateriaalit) näytetään vain kerran, eikä niitä toisteta segmenteissä.
 - Hajallaan olleet sähköpostiosoitteet on korvattu yhdellä yhteydenottolomakkeella. Asiakaspalvelun sähköposti ja puhelin näkyvät lomakkeen vieressä.
-- Toiminnallisuus:
-  - Sticky-ankkurinavi heron jälkeen, ja aktiivinen kohta korostuu scrollatessa (IntersectionObserver).
+- Toiminnallisuus (briefin sticky-ankkurinavi poistettiin jälkikäteen erillisestä pyynnöstä):
   - Smooth scroll ja `scroll-margin-top`.
   - Segmentin CTA esivalitsee myyntipisteen tyypin lomakkeeseen (`data-segment` tai URL `#yhteydenotto?segmentti=tarjoilu|pitat|kauppa`). Myös suora linkki tällä hashilla toimii.
   - "Kysy parilan hintaa" esivalitsee tarjoilun ja esitäyttää viestin.
   - Materiaalikortteja voi suodattaa (kaikki / myyntipiste / kauppa).
   - Lomakkeessa on validointi ja kiitosviesti. Mitään ei lähetetä.
   - Yläpalkin napilla voi piilottaa ⚠-merkinnät, kun prototyyppiä esitellään "puhtaana".
-- Sivu on tarkistettu Playwrightilla leveyksillä 1440, 390 ja 360 px: vaakaylivuotoa ei ole eikä JS-virheitä, ja ankkurinavi, hash-esivalinta ja lomake toimivat. Kuvakaappaukset ovat kansiossa `screenshots/`.
+- Sivu on tarkistettu Playwrightilla leveyksillä 1440, 390 ja 360 px: vaakaylivuotoa ei ole eikä JS-virheitä, ja hash-esivalinta ja lomake toimivat. Kuvakaappaukset ovat kansiossa `screenshots/`.
 
 ## Tokenit ja fontit
 
@@ -48,6 +47,5 @@ Kontrasti: keltaisissa napeissa teksti on aina espresso. Big numbers -osion kelt
 - **"4 min paistoaika parilassa"** big numbersissa tulee nykyisen sivun lauseesta "pariloida niitä 4 minuuttia". Segmenttiosiossa käytetään tarkempaa muotoa "3–4 minuutissa parilasta riippuen".
 - **Parilan hinta:** briefin "Hintatiedot: ota yhteyttä" näkyy muodossa "Kysy tarjous", ja siihen liittyy nappi, joka vie lomakkeeseen.
 - **Myyntiedustajan nimi ja sähköposti** (markkinointi- ja myyntiedustaja nykyisellä sivulla) jätettiin pois, koska briefissä lomakkeen viereen pyydettiin vain asiakaspalvelu. Materiaaleja ohjataan tilaamaan lomakkeella, asiakaspalvelusta tai alueen vähittäiskaupan edustajalta.
-- **Hinta ja kate -osiolla** ei ole omaa kohtaa sticky-navissa, koska briefin navilistassa sitä ei ollut. Osio sijaitsee materiaalien ja lomakkeen välissä.
 - **Materiaalikorttien lyhyet kuvaukset** lattiatarroille ja hyllyvipoille ("Tehostavat tuotteiden näkyvyyttä") on johdettu nykyisestä lauseesta "näkyvyyttä voidaan tehostaa lattiatarroilla ja hyllyvipoilla".
 - **Lisäsin prototyyppipalkin** sivun yläreunaan. Se ei kuulu lopulliseen sivuun.

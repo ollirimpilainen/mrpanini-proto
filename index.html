@@ -34,7 +34,6 @@
 
   --gutter:clamp(1rem,4vw,2.5rem);
   --section-y:clamp(3.5rem,8vw,6.5rem);
-  --subnav-h:56px;
   --radius:10px;
   --focus:0 0 0 3px var(--mp-white),0 0 0 6px var(--mp-maroon);
 }
@@ -58,7 +57,7 @@ ul,ol{margin:0;padding:0}
 .wrap{max-width:var(--wide-width);margin:0 auto;padding:0 var(--gutter)}
 .eyebrow{font-family:var(--font-label);text-transform:uppercase;font-size:16px;font-weight:600;letter-spacing:.64px;color:var(--mp-red);margin:0 0 .75rem;display:block}
 .lead{font-size:clamp(1.0625rem,2vw,1.25rem);max-width:40rem}
-.section{padding:var(--section-y) 0;scroll-margin-top:calc(var(--subnav-h) + 8px)}
+.section{padding:var(--section-y) 0;scroll-margin-top:16px}
 .section-head{max-width:var(--content-width);margin-bottom:clamp(2rem,4vw,3rem)}
 .center{text-align:center;margin-left:auto;margin-right:auto}
 
@@ -129,18 +128,6 @@ body.hide-warn .warn,body.hide-warn .warn-only{display:none!important}
 .seg-card:hover .seg-card__arrow{background:var(--mp-yellow-hover)}
 @media (max-width:820px){.seg-cards{grid-template-columns:1fr}.seg-card{flex-direction:row}.seg-card__img{width:38%;aspect-ratio:auto;flex-shrink:0}.seg-card__body{padding:1rem}.seg-card h2{font-size:1.0625rem}.seg-card__arrow{width:36px;height:36px;margin-top:.5rem}}
 
-/* Sticky-ankkurinavi */
-.subnav{position:sticky;top:0;z-index:30;background:var(--mp-maroon);height:var(--subnav-h)}
-.subnav .wrap{height:100%;display:flex;align-items:center}
-.subnav ul{display:flex;list-style:none;gap:.25rem;overflow-x:auto;min-width:0;flex:1;scrollbar-width:none;white-space:nowrap;width:100%;padding:0 2px}
-.subnav ul::-webkit-scrollbar{display:none}
-.subnav a{display:inline-flex;align-items:center;min-height:38px;padding:0 1rem;border-radius:50px;color:var(--mp-white);text-decoration:none;font:700 14px/1 var(--font-label);text-transform:uppercase;letter-spacing:.64px}
-.subnav a:hover{background:rgba(255,255,255,.12)}
-.subnav a.is-active{background:var(--mp-yellow);color:var(--mp-espresso)}
-.subnav li:last-child{margin-left:auto}
-.subnav li:last-child a{border:2px solid var(--mp-yellow)}
-@media (max-width:820px){.subnav li:last-child{margin-left:0}.subnav .wrap{padding-right:0}}
-
 /* Big numbers */
 .why{background:var(--mp-yellow);position:relative}
 .why .eyebrow{color:var(--mp-maroon)}
@@ -151,7 +138,7 @@ body.hide-warn .warn,body.hide-warn .warn-only{display:none!important}
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(.75rem,2vw,1.5rem);list-style:none;margin-bottom:clamp(2rem,4vw,3rem)}
 .stat{background:var(--mp-light-yellow);border-radius:var(--radius);padding:clamp(1rem,2.5vw,1.75rem);text-align:center}
 .stat__value{font-family:var(--font-display);color:var(--mp-maroon);font-size:clamp(2rem,5.5vw,3.5rem);line-height:1;display:block;text-transform:uppercase}
-.stat__value small{font-size:.5em}
+.stat__value small{font-size:.38em}
 .stat__label{display:block;margin-top:.5rem;font-weight:600;font-size:clamp(.875rem,1.6vw,1rem)}
 .benefits{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(1rem,2vw,1.5rem);list-style:none}
 .benefits li{display:flex;gap:.75rem;align-items:flex-start;font-weight:500}
@@ -380,20 +367,6 @@ fieldset legend{padding:0;margin-bottom:.6rem}
     </ul>
   </div>
 </section>
-
-<!-- STICKY-ANKKURINAVI -->
-<nav class="subnav" aria-label="Sivun osiot">
-  <div class="wrap">
-    <ul>
-      <li><a href="#tarjoilu" data-target="tarjoilu">Tarjoilu</a></li>
-      <li><a href="#pitat" data-target="pitat">Pitat</a></li>
-      <li><a href="#vahittaiskauppa" data-target="vahittaiskauppa">Kauppa</a></li>
-      <li><a href="#tilaus" data-target="tilaus">Tilaus</a></li>
-      <li><a href="#materiaalit" data-target="materiaalit">Materiaalit</a></li>
-      <li><a href="#yhteydenotto" data-target="yhteydenotto">Ota yhteyttä</a></li>
-    </ul>
-  </div>
-</nav>
 
 <!-- 2. MIKSI MR. PANINI -->
 <div class="why">
@@ -813,25 +786,6 @@ fieldset legend{padding:0;margin-bottom:.6rem}
   });
   window.addEventListener('hashchange',parseHash);
   parseHash();
-
-  // Aktiivinen kohta sticky-navissa
-  var links=[].slice.call(document.querySelectorAll('.subnav a'));
-  var map={};links.forEach(function(l){map[l.dataset.target]=l;});
-  var visible={};
-  var io=new IntersectionObserver(function(entries){
-    entries.forEach(function(en){visible[en.target.id]=en.isIntersecting;});
-    var current=null;
-    links.forEach(function(l){if(visible[l.dataset.target]&&!current)current=l.dataset.target;});
-    links.forEach(function(l){
-      var on=l.dataset.target===current;
-      l.classList.toggle('is-active',on);
-      if(on){l.setAttribute('aria-current','true');
-        var ul=l.closest('ul'),lr=l.getBoundingClientRect(),ur=ul.getBoundingClientRect();
-        if(lr.left<ur.left||lr.right>ur.right)ul.scrollTo({left:l.offsetLeft-16,behavior:'smooth'});
-      }else l.removeAttribute('aria-current');
-    });
-  },{rootMargin:'-35% 0px -60% 0px'});
-  Object.keys(map).forEach(function(id){var el=document.getElementById(id);if(el)io.observe(el);});
 
   // Materiaalisuodatin
   var fbtns=document.querySelectorAll('.filters button');
