@@ -1,0 +1,884 @@
+<!doctype html>
+<html lang="fi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Jälleenmyyjäksi – Mr. Panini (prototyyppi)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+/* Lisensoidut brändifontit ladataan teeman polusta vain sisäistä esittelyä varten */
+@font-face{font-family:Monaz;font-display:fallback;src:url(https://mrpanini.fi/app/themes/mrpanini-fi/dist/fonts/monaz/Monaz-Regular.ttf) format("truetype")}
+@font-face{font-family:Gelica;font-display:fallback;src:url(https://mrpanini.fi/app/themes/mrpanini-fi/dist/fonts/gelica/gelica-regular.otf) format("opentype")}
+
+:root{
+  --mp-yellow:#ffc72c;
+  --mp-yellow-hover:#f8b600;
+  --mp-light-yellow:#fff4d5;
+  --mp-cream:#ffeec0;
+  --mp-maroon:#3d0014;
+  --mp-red:#cc1717;
+  --mp-red-hover:#9e1212;
+  --mp-espresso:#1c1111;
+  --mp-dark:#20201f;
+  --mp-grey:#e0e0e0;
+  --mp-white:#ffffff;
+  --content-width:45rem;
+  --wide-width:81.25rem;
+
+  --font-display:Monaz,"Arial Rounded MT Bold","Trebuchet MS",cursive;
+  --font-label:Gelica,Georgia,"Times New Roman",serif;
+  --font-body:Poppins,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
+
+  --gutter:clamp(1rem,4vw,2.5rem);
+  --section-y:clamp(3.5rem,8vw,6.5rem);
+  --subnav-h:56px;
+  --radius:10px;
+  --focus:0 0 0 3px var(--mp-white),0 0 0 6px var(--mp-maroon);
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+body{margin:0;background:var(--mp-light-yellow);color:var(--mp-espresso);font:500 1rem/1.6 var(--font-body);overflow-x:clip}
+img{max-width:100%;height:auto;display:block}
+a{color:var(--mp-dark)}
+:focus-visible{outline:none;box-shadow:var(--focus);border-radius:4px}
+
+h1,h2{overflow-wrap:break-word;hyphens:manual;font-family:var(--font-display);font-weight:400;text-transform:uppercase;color:var(--mp-maroon);margin:0 0 .5em;letter-spacing:.01em}
+h1{font-size:clamp(2rem,5vw,2.625rem);line-height:1.15}
+h2{font-size:clamp(1.625rem,4vw,2rem);line-height:1.15}
+h3,h4,h5,h6{font-family:var(--font-body);font-weight:600;color:var(--mp-maroon);margin:0 0 .5em;line-height:1.3}
+h3{text-transform:uppercase;font-size:1.0625rem;letter-spacing:.02em}
+p{margin:0 0 1em}
+ul,ol{margin:0;padding:0}
+
+.wrap{max-width:var(--wide-width);margin:0 auto;padding:0 var(--gutter)}
+.eyebrow{font-family:var(--font-label);text-transform:uppercase;font-size:16px;font-weight:600;letter-spacing:.64px;color:var(--mp-red);margin:0 0 .75rem;display:block}
+.lead{font-size:clamp(1.0625rem,2vw,1.25rem);max-width:40rem}
+.section{padding:var(--section-y) 0;scroll-margin-top:calc(var(--subnav-h) + 8px)}
+.section-head{max-width:var(--content-width);margin-bottom:clamp(2rem,4vw,3rem)}
+.center{text-align:center;margin-left:auto;margin-right:auto}
+
+/* Napit */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;font-family:var(--font-label);text-transform:uppercase;font-size:16px;font-weight:700;letter-spacing:.64px;border-radius:50px;padding:10px 31px;min-height:48px;border:3px solid transparent;text-decoration:none;cursor:pointer;transition:background-color .15s,border-color .15s,transform .15s}
+.btn:active{transform:translateY(1px)}
+.btn-primary{background:var(--mp-yellow);border-color:var(--mp-yellow);color:var(--mp-espresso)}
+.btn-primary:hover{background:var(--mp-yellow-hover);border-color:var(--mp-yellow-hover)}
+.btn-secondary{background:var(--mp-red);border-color:var(--mp-red);color:var(--mp-white)}
+.btn-secondary:hover{background:var(--mp-red-hover);border-color:var(--mp-red-hover)}
+.btn-ghost{background:transparent;border-color:var(--mp-maroon);color:var(--mp-maroon)}
+.btn-ghost:hover{background:var(--mp-maroon);color:var(--mp-white)}
+
+/* ⚠-merkinnät */
+.warn{display:inline-flex;align-items:flex-start;gap:.4rem;background:var(--mp-white);border:2px dashed var(--mp-red);color:var(--mp-red-hover);font-size:.8125rem;font-weight:600;line-height:1.4;padding:.35rem .6rem;border-radius:6px}
+.warn strong{text-transform:uppercase;letter-spacing:.03em}
+.warn-block{display:block;padding:1rem 1.1rem;font-size:.875rem}
+body.hide-warn .warn,body.hide-warn .warn-only{display:none!important}
+
+/* Prototyyppipalkki */
+.proto-bar{background:var(--mp-maroon);color:var(--mp-white);font-size:.8125rem;line-height:1.4}
+.proto-bar .wrap{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding-top:.5rem;padding-bottom:.5rem;flex-wrap:wrap}
+.proto-bar button{background:transparent;color:var(--mp-white);border:1px solid rgba(255,255,255,.6);border-radius:50px;font:600 .75rem/1 var(--font-body);padding:.45rem .8rem;cursor:pointer}
+.proto-bar button:hover{background:rgba(255,255,255,.12)}
+
+/* Header */
+.site-header{background:var(--mp-light-yellow)}
+.site-header .wrap{display:flex;align-items:center;justify-content:space-between;gap:1rem;min-height:112px}
+.logo img{width:76px;height:auto}
+.main-nav{display:flex;align-items:center;gap:clamp(1rem,2.5vw,2.25rem)}
+.main-nav ul{display:flex;list-style:none;gap:clamp(1rem,2.5vw,2.25rem)}
+.main-nav a{font-family:var(--font-label);font-weight:700;text-transform:uppercase;letter-spacing:.32px;text-decoration:none;color:var(--mp-espresso);font-size:15px;padding:.4rem 0;border-bottom:3px solid transparent}
+.main-nav a:hover,.main-nav a[aria-current="page"]{border-bottom-color:var(--mp-yellow)}
+.lang{display:flex;gap:.25rem;padding-left:clamp(1rem,2vw,1.75rem);border-left:2px solid var(--mp-espresso)}
+.lang a{font-size:14px;padding:.3rem .4rem;border-bottom:0!important}
+.lang a[aria-current="true"]{text-decoration:underline;text-underline-offset:4px}
+.nav-toggle{display:none;background:var(--mp-yellow);border:0;border-radius:50px;padding:.6rem 1rem;font:700 14px/1 var(--font-label);text-transform:uppercase;letter-spacing:.64px;color:var(--mp-espresso);cursor:pointer;min-height:44px}
+.breadcrumb{font-size:.8125rem;padding-top:.25rem}
+.breadcrumb ol{list-style:none;display:flex;gap:.4rem;flex-wrap:wrap}
+.breadcrumb li+li::before{content:"›";margin-right:.4rem}
+@media (max-width:900px){
+  .nav-toggle{display:inline-flex}
+  .main-nav{position:absolute;left:0;right:0;top:100%;background:var(--mp-light-yellow);flex-direction:column;align-items:flex-start;padding:1rem var(--gutter) 1.5rem;border-bottom:3px solid var(--mp-yellow);display:none;z-index:40}
+  .main-nav.open{display:flex}
+  .main-nav ul{flex-direction:column;gap:.25rem}
+  .main-nav a{display:block;padding:.6rem 0;font-size:16px}
+  .lang{border-left:0;padding-left:0;border-top:2px solid var(--mp-espresso);padding-top:.75rem}
+  .site-header{position:relative}
+  .site-header .wrap{min-height:84px}
+  .logo img{width:60px}
+}
+
+/* Hero */
+.hero{padding:clamp(1.5rem,4vw,3rem) 0 clamp(3rem,6vw,5rem)}
+.hero-text{max-width:48rem;margin-bottom:clamp(2rem,4vw,3rem)}
+.seg-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(1rem,2vw,1.5rem);list-style:none}
+.seg-card{display:flex;flex-direction:column;height:100%;background:var(--mp-white);border-radius:var(--radius);text-decoration:none;color:inherit;overflow:hidden;border:3px solid transparent;transition:border-color .15s,transform .15s}
+.seg-card:hover{border-color:var(--mp-yellow);transform:translateY(-3px)}
+.seg-card__img{background:var(--mp-cream);aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;padding:1rem;overflow:hidden}
+.seg-card__img img{max-height:100%;width:auto;object-fit:contain}
+.seg-card__img.cover{padding:0}
+.seg-card__img.cover img{width:100%;height:100%;object-fit:cover}
+.seg-card__body{padding:1.25rem 1.25rem 1.4rem;display:flex;flex-direction:column;gap:.4rem;flex:1}
+.seg-card__num{font-family:var(--font-label);font-weight:700;color:var(--mp-red);font-size:14px;letter-spacing:.64px;text-transform:uppercase}
+.seg-card h2{font-family:var(--font-body);font-weight:600;text-transform:none;font-size:1.25rem;line-height:1.3;margin:0;letter-spacing:0}
+.seg-card p{margin:0;font-size:.9375rem;flex:1}
+.seg-card__arrow{margin-top:.75rem;width:44px;height:44px;border-radius:50%;background:var(--mp-yellow);display:grid;place-items:center;align-self:flex-start;transition:background-color .15s}
+.seg-card:hover .seg-card__arrow{background:var(--mp-yellow-hover)}
+@media (max-width:820px){.seg-cards{grid-template-columns:1fr}.seg-card{flex-direction:row}.seg-card__img{width:38%;aspect-ratio:auto;flex-shrink:0}.seg-card__body{padding:1rem}.seg-card h2{font-size:1.0625rem}.seg-card__arrow{width:36px;height:36px;margin-top:.5rem}}
+
+/* Sticky-ankkurinavi */
+.subnav{position:sticky;top:0;z-index:30;background:var(--mp-maroon);height:var(--subnav-h)}
+.subnav .wrap{height:100%;display:flex;align-items:center}
+.subnav ul{display:flex;list-style:none;gap:.25rem;overflow-x:auto;min-width:0;flex:1;scrollbar-width:none;white-space:nowrap;width:100%;padding:0 2px}
+.subnav ul::-webkit-scrollbar{display:none}
+.subnav a{display:inline-flex;align-items:center;min-height:38px;padding:0 1rem;border-radius:50px;color:var(--mp-white);text-decoration:none;font:700 14px/1 var(--font-label);text-transform:uppercase;letter-spacing:.64px}
+.subnav a:hover{background:rgba(255,255,255,.12)}
+.subnav a.is-active{background:var(--mp-yellow);color:var(--mp-espresso)}
+.subnav li:last-child{margin-left:auto}
+.subnav li:last-child a{border:2px solid var(--mp-yellow)}
+@media (max-width:820px){.subnav li:last-child{margin-left:0}.subnav .wrap{padding-right:0}}
+
+/* Big numbers */
+.why{background:var(--mp-yellow);position:relative}
+.why .eyebrow{color:var(--mp-maroon)}
+.wave{display:block;width:100%;height:clamp(24px,4vw,56px)}
+.wave-top{background:var(--mp-light-yellow)}
+.wave-bottom{background:var(--mp-light-yellow)}
+.why .section{padding-top:clamp(2rem,5vw,3.5rem);padding-bottom:clamp(2rem,5vw,3.5rem)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(.75rem,2vw,1.5rem);list-style:none;margin-bottom:clamp(2rem,4vw,3rem)}
+.stat{background:var(--mp-light-yellow);border-radius:var(--radius);padding:clamp(1rem,2.5vw,1.75rem);text-align:center}
+.stat__value{font-family:var(--font-display);color:var(--mp-maroon);font-size:clamp(2rem,5.5vw,3.5rem);line-height:1;display:block;text-transform:uppercase}
+.stat__value small{font-size:.5em}
+.stat__label{display:block;margin-top:.5rem;font-weight:600;font-size:clamp(.875rem,1.6vw,1rem)}
+.benefits{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(1rem,2vw,1.5rem);list-style:none}
+.benefits li{display:flex;gap:.75rem;align-items:flex-start;font-weight:500}
+.check{flex-shrink:0;width:28px;height:28px;border-radius:50%;background:var(--mp-maroon);display:grid;place-items:center;margin-top:1px}
+@media (max-width:900px){.stats{grid-template-columns:repeat(2,1fr)}.stat__value small{font-size:.38em}.benefits{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:560px){.benefits{grid-template-columns:1fr}}
+
+/* Segmenttiosiot */
+.segment+.segment{border-top:2px solid var(--mp-cream)}
+.segment:nth-of-type(even){background:var(--mp-white)}
+.seg-top{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:clamp(1.5rem,4vw,4rem);align-items:center;margin-bottom:clamp(2rem,4vw,3rem)}
+.seg-top__media{background:var(--mp-cream);border-radius:var(--radius);aspect-ratio:5/4;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.seg-top__media img{width:100%;height:100%;object-fit:cover}
+.seg-top__media.contain img{object-fit:contain;padding:1.5rem}
+.segment:nth-of-type(even) .seg-top__media{background:var(--mp-light-yellow)}
+.media-note{margin-top:.6rem}
+.seg-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(1rem,2vw,1.5rem)}
+.seg-block{background:var(--mp-white);border-radius:var(--radius);padding:clamp(1.25rem,2.5vw,1.75rem)}
+.segment:nth-of-type(even) .seg-block{background:var(--mp-light-yellow)}
+.seg-block__label{display:flex;align-items:center;gap:.6rem;margin-bottom:.9rem}
+.seg-block__label span{width:32px;height:32px;border-radius:50%;background:var(--mp-yellow);color:var(--mp-espresso);font:700 15px/32px var(--font-label);text-align:center;flex-shrink:0}
+.seg-block h3{margin:0;font-size:1rem}
+.seg-block ul{list-style:none;display:grid;gap:.6rem}
+.seg-block li{position:relative;padding-left:1.25rem}
+.seg-block li::before{content:"";position:absolute;left:0;top:.6em;width:8px;height:8px;border-radius:50%;background:var(--mp-red)}
+.steps{list-style:none;counter-reset:s;display:grid;gap:.75rem}
+.steps li{counter-increment:s;padding-left:2.25rem!important}
+.steps li::before{content:counter(s)!important;width:24px!important;height:24px!important;top:.05em!important;background:var(--mp-maroon)!important;color:var(--mp-white);font:700 13px/24px var(--font-body);text-align:center}
+.tip{margin-top:1rem;font-size:.875rem;background:var(--mp-cream);border-radius:8px;padding:.7rem .9rem}
+.seg-cta{margin-top:clamp(1.5rem,3vw,2.25rem);display:flex;align-items:center;gap:1rem 1.5rem;flex-wrap:wrap}
+.seg-cta p{margin:0;font-weight:600}
+@media (max-width:900px){.seg-top{grid-template-columns:1fr}.seg-top__media{max-width:520px;aspect-ratio:16/11}.seg-grid{grid-template-columns:1fr}}
+
+/* Parila-nosto */
+.product-box{margin-top:clamp(1.5rem,3vw,2rem);display:grid;grid-template-columns:220px 1fr;gap:clamp(1rem,3vw,2rem);align-items:center;background:var(--mp-cream);border-radius:var(--radius);padding:clamp(1rem,2.5vw,1.75rem)}
+.product-box img{border-radius:8px;background:var(--mp-white)}
+.product-box h3{margin-bottom:.4rem}
+.specs{display:grid;grid-template-columns:repeat(4,auto);gap:.4rem 1.5rem;justify-content:start;margin:.75rem 0 1rem;font-size:.9375rem}
+.specs dt{font-size:.75rem;text-transform:uppercase;letter-spacing:.04em;font-weight:600;color:var(--mp-maroon)}
+.specs dd{margin:0;font-weight:600}
+.specs div{display:flex;flex-direction:column}
+@media (max-width:700px){.product-box{grid-template-columns:1fr}.product-box img{max-width:240px}.specs{grid-template-columns:repeat(2,auto)}}
+
+/* Tilaus ja toimitus */
+.order{background:var(--mp-maroon);color:var(--mp-white)}
+.order h2{color:var(--mp-yellow)}
+.order .eyebrow{color:var(--mp-cream)}
+.order-intro{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(1rem,3vw,2rem);margin-bottom:clamp(2rem,4vw,3rem)}
+.order-fact{border-left:4px solid var(--mp-yellow);padding-left:1rem}
+.order-fact strong{display:block;font-size:1.125rem;color:var(--mp-yellow)}
+.journey{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(1rem,2vw,1.5rem);list-style:none;counter-reset:j}
+.journey li{counter-increment:j;background:rgba(255,255,255,.07);border-radius:var(--radius);padding:1.5rem;position:relative}
+.journey li::before{content:counter(j);display:grid;place-items:center;width:48px;height:48px;border-radius:50%;background:var(--mp-yellow);color:var(--mp-espresso);font:400 1.5rem/1 var(--font-display);margin-bottom:1rem}
+.journey li:not(:last-child)::after{content:"→";position:absolute;right:-1.1rem;top:2.1rem;color:var(--mp-yellow);font-size:1.5rem;z-index:1}
+.journey h3{color:var(--mp-white);text-transform:none;font-size:1.125rem;margin-bottom:.3rem}
+.journey p{margin:0;font-size:.9375rem;color:rgba(255,255,255,.88)}
+.order-cta{margin-top:clamp(2rem,4vw,2.5rem)}
+@media (max-width:820px){.order-intro{grid-template-columns:1fr}.journey{grid-template-columns:1fr}.journey li:not(:last-child)::after{content:"↓";right:auto;left:2.3rem;top:auto;bottom:-1.55rem}}
+
+/* Markkinointituki */
+.filters{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1.5rem}
+.filters button{font:600 .875rem/1 var(--font-body);background:var(--mp-white);border:2px solid var(--mp-grey);color:var(--mp-espresso);border-radius:50px;padding:.6rem 1rem;cursor:pointer;min-height:42px}
+.filters button[aria-pressed="true"]{background:var(--mp-maroon);border-color:var(--mp-maroon);color:var(--mp-white)}
+.materials{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(.75rem,2vw,1.25rem);list-style:none}
+.material{background:var(--mp-white);border-radius:var(--radius);padding:1.25rem;display:flex;flex-direction:column;gap:.5rem}
+.material[hidden]{display:none}
+.material__icon{width:48px;height:48px;border-radius:8px;background:var(--mp-cream);display:grid;place-items:center;margin-bottom:.25rem}
+.material h3{text-transform:none;font-size:1rem;margin:0}
+.material p{margin:0;font-size:.875rem}
+.tag{align-self:flex-start;margin-top:auto;font-size:.75rem;font-weight:600;padding:.2rem .6rem;border-radius:50px;background:var(--mp-light-yellow);color:var(--mp-maroon)}
+.mat-foot{margin-top:clamp(1.5rem,3vw,2rem);display:flex;align-items:center;gap:1rem 1.5rem;flex-wrap:wrap;background:var(--mp-cream);border-radius:var(--radius);padding:1.25rem 1.5rem}
+.mat-foot p{margin:0;flex:1;min-width:16rem}
+@media (max-width:1000px){.materials{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:420px){.materials{grid-template-columns:1fr}}
+
+/* Hinta ja kate */
+.pricing{background:var(--mp-white)}
+.price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(1rem,2vw,1.5rem);list-style:none;margin-top:1.5rem}
+.price-card{border:2px dashed var(--mp-red);border-radius:var(--radius);padding:1.5rem;background:var(--mp-light-yellow)}
+.price-card h3{font-size:.9375rem}
+.price-row{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;padding:.6rem 0;border-bottom:1px solid var(--mp-cream)}
+.price-row:last-child{border-bottom:0}
+.price-row b{font-family:var(--font-display);font-weight:400;font-size:1.75rem;color:var(--mp-maroon)}
+@media (max-width:820px){.price-grid{grid-template-columns:1fr}}
+
+/* Lomake */
+.contact{background:var(--mp-light-yellow)}
+.contact-grid{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,.8fr);gap:clamp(1.5rem,4vw,4rem);align-items:start}
+.form-card{background:var(--mp-white);border-radius:var(--radius);padding:clamp(1.25rem,3vw,2.5rem)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem 1.25rem}
+.field{display:flex;flex-direction:column;gap:.35rem;margin-bottom:1.1rem}
+.field label,.field legend{font-weight:600;font-size:.9375rem;color:var(--mp-espresso)}
+.opt{font-weight:500;color:#5b4b4b;font-size:.8125rem}
+.req{color:var(--mp-red)}
+input[type=text],input[type=email],input[type=tel],textarea{font:500 1rem/1.4 var(--font-body);color:var(--mp-espresso);background:var(--mp-white);border:2px solid #b9adad;border-radius:8px;padding:.7rem .85rem;min-height:48px;width:100%}
+input:hover,textarea:hover{border-color:var(--mp-espresso)}
+input:focus-visible,textarea:focus-visible{border-color:var(--mp-maroon);box-shadow:0 0 0 3px var(--mp-yellow);outline:none}
+textarea{min-height:120px;resize:vertical}
+fieldset{border:0;padding:0;margin:0 0 1.25rem;min-width:0}
+fieldset legend{padding:0;margin-bottom:.6rem}
+.radio-grid{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
+.radio{position:relative}
+.radio input{position:absolute;opacity:0;width:1px;height:1px}
+.radio label{display:flex;align-items:center;gap:.65rem;border:2px solid #b9adad;border-radius:8px;padding:.75rem .9rem;cursor:pointer;min-height:52px;font-weight:600;font-size:.9375rem;transition:border-color .15s,background-color .15s}
+.radio label::before{content:"";width:20px;height:20px;border-radius:50%;border:2px solid var(--mp-espresso);flex-shrink:0;background:var(--mp-white)}
+.radio input:checked+label{border-color:var(--mp-maroon);background:var(--mp-cream)}
+.radio input:checked+label::before{border-color:var(--mp-maroon);background:radial-gradient(circle,var(--mp-maroon) 0 5px,var(--mp-white) 6px)}
+.radio input:focus-visible+label{box-shadow:0 0 0 3px var(--mp-yellow)}
+.radio label:hover{border-color:var(--mp-espresso)}
+.prefill-note{display:none;font-size:.8125rem;margin-top:.5rem;color:var(--mp-maroon);font-weight:600}
+.prefill-note.show{display:block}
+.err{color:var(--mp-red-hover);font-size:.8125rem;font-weight:600;display:none}
+.field.invalid .err,fieldset.invalid .err{display:block}
+.field.invalid input{border-color:var(--mp-red)}
+.privacy{font-size:.8125rem;margin:.25rem 0 1.25rem}
+.thanks{display:none;text-align:center;padding:clamp(1.5rem,4vw,3rem) 1rem}
+.thanks.show{display:block}
+.thanks__icon{width:72px;height:72px;border-radius:50%;background:var(--mp-yellow);display:grid;place-items:center;margin:0 auto 1.25rem}
+.aside-contact{background:var(--mp-cream);border-radius:var(--radius);padding:1.5rem}
+.aside-contact h3{font-size:.9375rem}
+.aside-contact p{font-size:.9375rem}
+.aside-contact a{font-weight:600}
+.aside-contact dl{margin:0;display:grid;gap:.75rem}
+.aside-contact dt{font-size:.75rem;text-transform:uppercase;letter-spacing:.04em;font-weight:600;color:var(--mp-maroon)}
+.aside-contact dd{margin:0}
+@media (max-width:900px){.contact-grid{grid-template-columns:1fr}}
+@media (max-width:600px){.form-row,.radio-grid{grid-template-columns:1fr}}
+
+/* Footer */
+.footer-wave{display:block;width:100%;height:clamp(40px,9vw,110px);margin-bottom:-1px}
+.site-footer{background:var(--mp-red);color:var(--mp-white);font-size:14px;padding:clamp(1rem,3vw,2rem) 0 80px}
+.site-footer a{color:var(--mp-white)}
+.site-footer h6{color:var(--mp-white);font-size:14px;text-transform:uppercase;margin-bottom:.5rem;font-family:var(--font-label);letter-spacing:.64px}
+.footer-grid{display:grid;grid-template-columns:auto 1fr 1fr auto 1fr;gap:2rem;align-items:start}
+.footer-grid ul{list-style:none;display:grid;gap:.25rem}
+.footer-grid ul a{text-decoration:none;font-weight:600}
+.footer-grid ul a:hover{text-decoration:underline}
+.footer-logo img{width:100px}
+.social{display:flex;gap:.5rem;margin-top:.75rem}
+.social a{width:36px;height:36px;border-radius:6px;background:var(--mp-espresso);display:grid;place-items:center}
+.site-footer address{font-style:normal;line-height:1.6}
+@media (max-width:900px){.footer-grid{grid-template-columns:1fr 1fr}.footer-logo{grid-column:1/-1}}
+@media (max-width:480px){.footer-grid{grid-template-columns:1fr}}
+
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.skip{position:absolute;left:-9999px;top:0;background:var(--mp-yellow);color:var(--mp-espresso);padding:.75rem 1rem;z-index:100;font-weight:700}
+.skip:focus{left:1rem;top:1rem}
+</style>
+</head>
+<body>
+<a class="skip" href="#sisalto">Siirry sisältöön</a>
+
+<div class="proto-bar" role="note">
+  <div class="wrap">
+    <span><strong>Prototyyppi</strong> · Jälleenmyyjäksi-sivun uusi rakenne. ⚠-merkityt kohdat vahvistetaan asiakkaan kanssa.</span>
+    <button type="button" id="toggleWarn" aria-pressed="true">Piilota ⚠-merkinnät</button>
+  </div>
+</div>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="logo" href="https://mrpanini.fi/"><img src="https://mrpanini.fi/app/themes/mrpanini-fi/dist/images/logo.png" alt="Mr. Panini – etusivulle" width="100" height="136"></a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="mainNav">Valikko</button>
+    <nav class="main-nav" id="mainNav" aria-label="Päävalikko">
+      <ul>
+        <li><a href="https://mrpanini.fi/tuotteet/">Tuotteet</a></li>
+        <li><a href="https://mrpanini.fi/tarina/">Meistä</a></li>
+        <li><a href="https://mrpanini.fi/yhteystiedot/">Yhteystiedot</a></li>
+        <li><a href="#" aria-current="page">Jälleenmyyjäksi</a></li>
+      </ul>
+      <div class="lang" aria-label="Kieli">
+        <a href="#" aria-current="true" lang="fi">FI</a>
+        <a href="https://mrpanini.fi/sv/aterforsaljare/" lang="sv">SV</a>
+      </div>
+    </nav>
+  </div>
+  <nav class="wrap breadcrumb" aria-label="Murupolku">
+    <ol><li><a href="https://mrpanini.fi/">Etusivu</a></li><li aria-current="page">Jälleenmyyjäksi</li></ol>
+  </nav>
+</header>
+
+<main id="sisalto">
+
+<!-- 1. HERO JA SEGMENTTIVALINTA -->
+<section class="hero" aria-labelledby="h1">
+  <div class="wrap">
+    <div class="hero-text">
+      <span class="eyebrow">Jälleenmyyjäksi</span>
+      <h1 id="h1">Myy Mr. Paninia omassa myynti&shy;pisteessäsi</h1>
+      <p class="lead">Valmis tuote, maksuton markkinointimateriaali ja toimitus kahdessa arkipäivässä. Valitse, miten haluat myydä.</p>
+    </div>
+    <ul class="seg-cards">
+      <li>
+        <a class="seg-card" href="#tarjoilu">
+          <div class="seg-card__img"><img src="https://mrpanini.fi/app/uploads/2019/03/parila-500px-190129.png" alt="" loading="eager"></div>
+          <div class="seg-card__body">
+            <span class="seg-card__num">Myyntitapa 1</span>
+            <h2>Tarjoilu myyntipisteessä</h2>
+            <p>Kahvilat, huoltoasemat ja kioskit. Paninit paistetaan parilassa ja tarjoillaan lämpimänä.</p>
+            <span class="seg-card__arrow" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1c1111" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></span>
+          </div>
+        </a>
+      </li>
+      <li>
+        <a class="seg-card" href="#pitat">
+          <div class="seg-card__img"><img src="https://mrpanini.fi/app/uploads/2026/10/mr.panini-pita-mockup-130526-pulledpork-480x540.png" alt=""></div>
+          <div class="seg-card__body">
+            <span class="seg-card__num">Myyntitapa 2</span>
+            <h2>Lämmitettävät pitat</h2>
+            <p>Pitat lämmitetään airfryerissa noin 6 minuutissa.</p>
+            <span class="seg-card__arrow" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1c1111" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></span>
+          </div>
+        </a>
+      </li>
+      <li>
+        <a class="seg-card" href="#vahittaiskauppa">
+          <div class="seg-card__img cover"><img src="https://mrpanini.fi/app/uploads/2026/04/mr.-panini-fiiliskuva-pakkaukset-suuri-600x400.png" alt=""></div>
+          <div class="seg-card__body">
+            <span class="seg-card__num">Myyntitapa 3</span>
+            <h2>Kaupan hyllyyn</h2>
+            <p>Vähittäiskaupat ja myymälät. Paninit myydään valmiina hyllystä.</p>
+            <span class="seg-card__arrow" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1c1111" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></span>
+          </div>
+        </a>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- STICKY-ANKKURINAVI -->
+<nav class="subnav" aria-label="Sivun osiot">
+  <div class="wrap">
+    <ul>
+      <li><a href="#tarjoilu" data-target="tarjoilu">Tarjoilu</a></li>
+      <li><a href="#pitat" data-target="pitat">Pitat</a></li>
+      <li><a href="#vahittaiskauppa" data-target="vahittaiskauppa">Kauppa</a></li>
+      <li><a href="#tilaus" data-target="tilaus">Tilaus</a></li>
+      <li><a href="#materiaalit" data-target="materiaalit">Materiaalit</a></li>
+      <li><a href="#yhteydenotto" data-target="yhteydenotto">Ota yhteyttä</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- 2. MIKSI MR. PANINI -->
+<div class="why">
+  <svg class="wave wave-top" viewBox="0 0 1440 56" preserveAspectRatio="none" aria-hidden="true"><path d="M0 56V28C120 6 240 2 360 18S600 54 720 40 960 4 1080 8s240 30 360 26V56Z" fill="#ffc72c"/></svg>
+  <section class="section" id="miksi" aria-labelledby="miksi-h">
+    <div class="wrap">
+      <div class="section-head center" style="text-align:center">
+        <span class="eyebrow">Miksi Mr. Panini</span>
+        <h2 id="miksi-h">Valmis ja tunnettu konsepti</h2>
+      </div>
+      <ul class="stats">
+        <li class="stat"><span class="stat__value">0 €</span><span class="stat__label">konseptimaksu</span></li>
+        <li class="stat"><span class="stat__value">7 <small>vrk</small></span><span class="stat__label">taattu säilyvyys</span></li>
+        <li class="stat"><span class="stat__value">2 <small>arkipäivää</small></span><span class="stat__label">toimitusaika</span></li>
+        <li class="stat"><span class="stat__value">4 <small>min</small></span><span class="stat__label">paistoaika parilassa</span></li>
+      </ul>
+      <ul class="benefits">
+        <li><span class="check" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span>Myyntipaketti räätälöidään tarpeidesi mukaan.</li>
+        <li><span class="check" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span>Käyttöönotto on helppoa ja onnistuu olemassa oleviin kalusteisiin.</li>
+        <li><span class="check" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span>Saat käyttöösi kattavan ja maksuttoman markkinointimateriaalin.</li>
+        <li><span class="check" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span>Paninit ja pitat ovat valmiita tuoretuotteita.</li>
+      </ul>
+    </div>
+  </section>
+  <svg class="wave wave-bottom" viewBox="0 0 1440 56" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0V30c120 22 240 26 360 10S600 2 720 16s240 36 360 32 240-28 360-24V0Z" fill="#ffc72c"/></svg>
+</div>
+
+<!-- 3a. TARJOILU -->
+<section class="section segment" id="tarjoilu" aria-labelledby="tarjoilu-h">
+  <div class="wrap">
+    <div class="seg-top">
+      <div>
+        <span class="eyebrow">Myyntitapa 1 · Parila</span>
+        <h2 id="tarjoilu-h">Tarjoilu myyntipisteessä</h2>
+        <p class="lead">Paninit paistetaan parilassa ja tarjoillaan asiakkaalle lämpimänä. Tuote tulee valmiina, sinun tarvitsee vain paistaa se.</p>
+      </div>
+      <div class="seg-top__media"><img src="https://mrpanini.fi/app/uploads/2026/04/94f2fbd2597752e91a23035f9faccf42773acbaa-edited.png" alt="Kaksi päällekkäistä lämmintä paninia keltaisella taustalla"></div>
+    </div>
+
+    <div class="seg-grid">
+      <div class="seg-block">
+        <div class="seg-block__label"><span>1</span><h3>Sopii sinulle, jos…</h3></div>
+        <p>Pidät kahvilaa, huoltoasemaa tai kioskia ja haluat tarjota lämpimän, nopeasti valmistuvan suolaisen tuotteen.</p>
+      </div>
+      <div class="seg-block">
+        <div class="seg-block__label"><span>2</span><h3>Mitä tarvitset</h3></div>
+        <ul>
+          <li><b>Laite:</b> parila. Voit hankkia sen meiltä (alla).</li>
+          <li><b>Tila:</b> paikka parilalle myyntipisteen tuntumassa. Käyttöönotto onnistuu olemassa oleviin kalusteisiin.</li>
+          <li><b>Esillepano:</b> maksuton markkinointimateriaali, esim. julisteet, pöytäständit ja vitriinitarrat.</li>
+        </ul>
+      </div>
+      <div class="seg-block">
+        <div class="seg-block__label"><span>3</span><h3>Näin valmistat</h3></div>
+        <ol class="steps">
+          <li>Kun parila on sijoitettu oikein, paiston valmisteluun kuluu vain 30 sekuntia.</li>
+          <li>Paninit paistuvat parilasta riippuen 3–4 minuutissa.</li>
+          <li>Tarjoile tarjoilupussissa. Pussit tulevat paninien mukana.</li>
+        </ol>
+        <p class="tip"><b>Vinkki:</b> panini maistuu myös airfryerissa valmistettuna. Lämmitys 180 °C noin 5 minuuttia.</p>
+      </div>
+    </div>
+
+    <div class="product-box">
+      <img src="https://mrpanini.fi/app/uploads/2022/10/parila-604x540.jpg" alt="Hendi-parila" width="604" height="540" loading="lazy">
+      <div>
+        <span class="eyebrow" style="margin-bottom:.4rem">Laite</span>
+        <h3>Hendi-parila</h3>
+        <p>Paninin valmistamiseen myymme laadukasta valurautaista Hendi-merkkistä parilaa, jossa on säädettävä termostaatti ja tarttumaton pinnoite.</p>
+        <dl class="specs">
+          <div><dt>Mitat</dt><dd>P 430 × L 370 × K 210 mm</dd></div>
+          <div><dt>Paino</dt><dd>18,5 kg</dd></div>
+          <div><dt>Takuu</dt><dd>1 vuosi toimituspäivästä</dd></div>
+          <div><dt>Hinta</dt><dd>Kysy tarjous</dd></div>
+        </dl>
+        <a class="btn btn-ghost" href="#yhteydenotto" data-segment="tarjoilu" data-topic="parila">Kysy parilan hintaa</a>
+      </div>
+    </div>
+
+    <div class="seg-cta">
+      <a class="btn btn-primary" href="#yhteydenotto?segmentti=tarjoilu" data-segment="tarjoilu">Aloita tarjoilu myyntipisteessä</a>
+      <p>Räätälöimme myyntipaketin myyntipisteesi mukaan.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 3b. PITAT -->
+<section class="section segment" id="pitat" aria-labelledby="pitat-h">
+  <div class="wrap">
+    <div class="seg-top">
+      <div>
+        <span class="eyebrow">Myyntitapa 2 · Airfryer</span>
+        <h2 id="pitat-h">Lämmitettävät pitat</h2>
+        <p class="lead">Mr. Panini Pitat lämmitetään helposti ja nopeasti airfryerissa.</p>
+        <p class="warn"><span aria-hidden="true">⚠</span><span><strong>Täydennettävä:</strong> nykyisellä sivulla pitoista on vähän sisältöä. Ingressi ja alla olevat ⚠-kohdat vahvistetaan asiakkaalta.</span></p>
+      </div>
+      <div class="seg-top__media contain"><img src="https://mrpanini.fi/app/uploads/2026/10/mr.panini-pita-mockup-130526-pulledpork-480x540.png" alt="Mr. Panini Pita Pulled Pork -pakkaus" loading="lazy"></div>
+    </div>
+
+    <div class="seg-grid">
+      <div class="seg-block">
+        <div class="seg-block__label"><span>1</span><h3>Sopii sinulle, jos…</h3></div>
+        <p class="warn warn-block"><span aria-hidden="true">⚠</span> <strong>Asiakkaalta vahvistettava.</strong><br>Kenelle pitat on tarkoitettu? Esim. myyntipisteet, joissa on airfryer mutta ei parilaa.</p>
+      </div>
+      <div class="seg-block">
+        <div class="seg-block__label"><span>2</span><h3>Mitä tarvitset</h3></div>
+        <ul>
+          <li><b>Laite:</b> airfryer.</li>
+          <li><b>Tila:</b> <span class="warn"><span aria-hidden="true">⚠</span> vahvistettava</span></li>
+          <li><b>Esillepano:</b> <span class="warn"><span aria-hidden="true">⚠</span> vahvistettava (onko pitoille omia materiaaleja?)</span></li>
+        </ul>
+      </div>
+      <div class="seg-block">
+        <div class="seg-block__label"><span>3</span><h3>Näin valmistat</h3></div>
+        <ol class="steps">
+          <li>Lämmitä pita airfryerissa 180 °C:ssa noin 6 minuuttia.</li>
+          <li>Tarjoile lämpimänä. <span class="warn"><span aria-hidden="true">⚠</span> tarjoilutapa vahvistettava</span></li>
+        </ol>
+        <p class="tip">Tarkistathan aina oman laitteesi paistoajan, laitekohtaisia eroja saattaa olla.</p>
+      </div>
+    </div>
+
+    <div class="seg-cta">
+      <a class="btn btn-primary" href="#yhteydenotto?segmentti=pitat" data-segment="pitat">Aloita pitojen myynti</a>
+      <p>Pitoja voit tilata suoraan meiltä tai tukkukauppojen kautta.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 3c. VÄHITTÄISKAUPPA -->
+<section class="section segment" id="vahittaiskauppa" aria-labelledby="kauppa-h">
+  <div class="wrap">
+    <div class="seg-top">
+      <div>
+        <span class="eyebrow">Myyntitapa 3 · Vähittäiskauppa</span>
+        <h2 id="kauppa-h">Kaupan hyllyyn</h2>
+        <p class="lead">Paninit myydään valmiina hyllystä. Maksuttomat mainosmateriaalit auttavat asiakkaita löytämään tuotteet myymälästäsi.</p>
+      </div>
+      <div>
+        <div class="seg-top__media"><img src="https://mrpanini.fi/app/uploads/2026/04/mr.-panini-fiiliskuva-pakkaukset-suuri-810x540.png" alt="Mr. Panini -paninipakkauksia keltaisella pohjalla" loading="lazy"></div>
+        <p class="warn media-note"><span aria-hidden="true">⚠</span><span>Kuva lainattu etusivulta. Kuva hyllytarjottimesta tai myymälästä puuttuu.</span></p>
+      </div>
+    </div>
+
+    <div class="seg-grid">
+      <div class="seg-block">
+        <div class="seg-block__label"><span>1</span><h3>Sopii sinulle, jos…</h3></div>
+        <p>Olet vähittäiskauppa tai myymälä ja haluat valikoimaan valmiin, tunnetun paninin, jota asiakas voi ostaa suoraan hyllystä.</p>
+      </div>
+      <div class="seg-block">
+        <div class="seg-block__label"><span>2</span><h3>Mitä tarvitset</h3></div>
+        <ul>
+          <li><b>Laite:</b> ei laitetta.</li>
+          <li><b>Tila:</b> hyllypaikka. <span class="warn"><span aria-hidden="true">⚠</span> säilytysvaatimus (kylmähylly?) vahvistettava</span></li>
+          <li><b>Esillepano:</b> hyllytarjotin pitää paninit tukevasti hyllyssä.</li>
+        </ul>
+      </div>
+      <div class="seg-block">
+        <div class="seg-block__label"><span>3</span><h3>Näin myyt</h3></div>
+        <ol class="steps">
+          <li>Aseta paninit hyllytarjottimeen.</li>
+          <li>Lisää näkyvyyttä lattiatarroilla ja hyllyvipoilla.</li>
+          <li>Tilaa mainosmateriaalit oman alueesi vähittäiskaupan edustajalta tai asiakaspalvelusta.</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="seg-cta">
+      <a class="btn btn-primary" href="#yhteydenotto?segmentti=kauppa" data-segment="kauppa">Tuo paninit kaupan hyllyyn</a>
+      <p>Kerro myymäläsi tiedot, niin otamme yhteyttä.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 4. TILAUS JA TOIMITUS -->
+<section class="section order" id="tilaus" aria-labelledby="tilaus-h">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Kaikille myyntitavoille</span>
+      <h2 id="tilaus-h">Tilaus ja toimitus</h2>
+    </div>
+    <div class="order-intro">
+      <p class="order-fact"><strong>Tilaa suoraan meiltä tai tukkukauppojen kautta</strong>Sekä paninit että pitat.</p>
+      <p class="order-fact"><strong>Toimitus kahdessa arkipäivässä</strong>Toimitus tapahtuu pääsääntöisesti kahden arkipäivän kuluessa.</p>
+    </div>
+    <h3 style="color:var(--mp-white);margin-bottom:1rem">Näin pääset alkuun</h3>
+    <ol class="journey">
+      <li><h3>Ota yhteyttä</h3><p>Kerro lomakkeella, millainen myyntipiste sinulla on.</p></li>
+      <li><h3>Räätälöidään myyntipaketti</h3><p>Myyntipaketti räätälöidään tarpeidesi mukaan.</p></li>
+      <li><h3>Toimitus ja markkinointimateriaalit</h3><p>Saat tuotteet ja maksuttomat markkinointimateriaalit käyttöösi.</p></li>
+    </ol>
+    <div class="order-cta"><a class="btn btn-primary" href="#yhteydenotto">Ota yhteyttä</a></div>
+  </div>
+</section>
+
+<!-- 5. MARKKINOINTITUKI -->
+<section class="section" id="materiaalit" aria-labelledby="mat-h">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Markkinointituki</span>
+      <h2 id="mat-h">Maksuttomat markkinointi&shy;materiaalit</h2>
+      <p>Jälleenmyyjänä voit hyödyntää Mr. Paninin markkinointivälineitä maksutta. Ne auttavat asiakkaita löytämään paninit myyntipisteestäsi.</p>
+    </div>
+    <div class="filters" role="group" aria-label="Suodata materiaaleja">
+      <button type="button" data-filter="all" aria-pressed="true">Kaikki</button>
+      <button type="button" data-filter="myyntipiste" aria-pressed="false">Myyntipisteeseen</button>
+      <button type="button" data-filter="kauppa" aria-pressed="false">Kaupan hyllyyn</button>
+    </div>
+    <ul class="materials">
+      <li class="material" data-cat="myyntipiste">
+        <span class="material__icon" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3d0014" stroke-width="2"><rect x="5" y="3" width="14" height="18" rx="1"/><path d="M8 7h8M8 11h8M8 15h5"/></svg></span>
+        <h3>Juliste</h3><p>50 × 70 cm</p><span class="tag">Myyntipiste</span>
+      </li>
+      <li class="material" data-cat="myyntipiste">
+        <span class="material__icon" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3d0014" stroke-width="2"><rect x="4" y="5" width="10" height="14" rx="1"/><rect x="10" y="3" width="10" height="14" rx="1"/></svg></span>
+        <h3>A5-mainos</h3><p>2-puolinen, 5 erilaista</p><span class="tag">Myyntipiste</span>
+      </li>
+      <li class="material" data-cat="myyntipiste">
+        <span class="material__icon" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3d0014" stroke-width="2"><path d="M7 3h10l-2 18H9z"/><path d="M8 8h8"/></svg></span>
+        <h3>Pöytäständi</h3><p>A5</p><span class="tag">Myyntipiste</span>
+      </li>
+      <li class="material" data-cat="myyntipiste">
+        <span class="material__icon" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3d0014" stroke-width="2"><rect x="6" y="4" width="12" height="16" rx="2"/><path d="M9 14h6"/></svg></span>
+        <h3>Vitriinitarra</h3><p>Staattinen, 6 × 10 cm, itsetäytettävä hintapaikka</p><span class="tag">Myyntipiste</span>
+      </li>
+      <li class="material" data-cat="myyntipiste">
+        <span class="material__icon" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3d0014" stroke-width="2"><rect x="2" y="9" width="20" height="6" rx="1"/></svg></span>
+        <h3>Huomiotarra vitriiniin</h3><p>Staattinen, 25 × 4 cm</p><span class="tag">Myyntipiste</span>
+      </li>
+      <li class="material" data-cat="kauppa">
+        <span class="material__icon" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3d0014" stroke-width="2"><path d="M3 15h18M5 15V9M19 15V9M8 15v-4h8v4"/></svg></span>
+        <h3>Hyllytarjotin</h3><p>Pitää paninit tukevasti hyllyssä</p><span class="tag">Kauppa</span>
+      </li>
+      <li class="material" data-cat="kauppa">
+        <span class="material__icon" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3d0014" stroke-width="2"><ellipse cx="12" cy="14" rx="9" ry="5"/><path d="M12 4v6M9 7l3 3 3-3"/></svg></span>
+        <h3>Lattiatarrat</h3><p>Tehostavat tuotteiden näkyvyyttä</p><span class="tag">Kauppa</span>
+      </li>
+      <li class="material" data-cat="kauppa">
+        <span class="material__icon" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3d0014" stroke-width="2"><path d="M3 8h18"/><path d="M10 8v12h8V8"/></svg></span>
+        <h3>Hyllyvipat</h3><p>Tehostavat tuotteiden näkyvyyttä hyllyssä</p><span class="tag">Kauppa</span>
+      </li>
+    </ul>
+    <div class="mat-foot">
+      <p>Kuvat ja aineistot löydät mediapankista. Painetut materiaalit voit tilata yhteydenottolomakkeella, asiakaspalvelusta tai vähittäiskaupassa oman alueesi edustajalta.</p>
+      <a class="btn btn-secondary" href="https://mrpanini.fi/mediapankki/">Mediapankki</a>
+    </div>
+  </div>
+</section>
+
+<!-- 6. HINTA JA KATE -->
+<section class="section pricing" id="hinta" aria-labelledby="hinta-h">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Hinta ja kate</span>
+      <h2 id="hinta-h">Mitä myynnistä jää käteen</h2>
+      <p class="warn warn-block"><span aria-hidden="true">⚠</span> <strong>Asiakkaalta vahvistettava.</strong> Hintatiedot eivät näy nykyisellä sivulla. Tämä on suositeltu lisäys: jälleenmyyjä haluaa arvioida kannattavuuden ennen yhteydenottoa. Luvut ovat paikkamerkkejä.</p>
+    </div>
+    <ul class="price-grid">
+      <li class="price-card">
+        <h3>Tarjoilu myyntipisteessä</h3>
+        <div class="price-row"><span>Suositusmyyntihinta n.</span><b>X €</b></div>
+        <div class="price-row"><span>Katteesi n.</span><b>Y €</b></div>
+      </li>
+      <li class="price-card">
+        <h3>Lämmitettävät pitat</h3>
+        <div class="price-row"><span>Suositusmyyntihinta n.</span><b>X €</b></div>
+        <div class="price-row"><span>Katteesi n.</span><b>Y €</b></div>
+      </li>
+      <li class="price-card">
+        <h3>Kaupan hyllyyn</h3>
+        <div class="price-row"><span>Suositusmyyntihinta n.</span><b>X €</b></div>
+        <div class="price-row"><span>Katteesi n.</span><b>Y €</b></div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- 7. YHTEYDENOTTO -->
+<section class="section contact" id="yhteydenotto" aria-labelledby="yht-h">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Ota yhteyttä</span>
+      <h2 id="yht-h">Aloitetaan yhdessä</h2>
+      <p>Kerro hieman myyntipisteestäsi. Otamme yhteyttä ja räätälöimme sinulle sopivan myyntipaketin.</p>
+    </div>
+    <div class="contact-grid">
+      <div class="form-card">
+        <form id="leadForm" novalidate>
+          <div class="form-row">
+            <div class="field"><label for="f-nimi">Nimi <span class="req" aria-hidden="true">*</span></label><input id="f-nimi" name="nimi" type="text" autocomplete="name" required aria-describedby="e-nimi"><span class="err" id="e-nimi">Kirjoita nimesi.</span></div>
+            <div class="field"><label for="f-yritys">Yritys <span class="req" aria-hidden="true">*</span></label><input id="f-yritys" name="yritys" type="text" autocomplete="organization" required aria-describedby="e-yritys"><span class="err" id="e-yritys">Kirjoita yrityksen nimi.</span></div>
+            <div class="field"><label for="f-email">Sähköposti <span class="req" aria-hidden="true">*</span></label><input id="f-email" name="email" type="email" autocomplete="email" required aria-describedby="e-email"><span class="err" id="e-email">Tarkista sähköpostiosoite, esim. nimi@yritys.fi.</span></div>
+            <div class="field"><label for="f-puh">Puhelin <span class="opt">(valinnainen)</span></label><input id="f-puh" name="puhelin" type="tel" autocomplete="tel"></div>
+          </div>
+
+          <fieldset id="segField" aria-describedby="e-seg">
+            <legend>Myyntipisteen tyyppi <span class="req" aria-hidden="true">*</span></legend>
+            <div class="radio-grid">
+              <div class="radio"><input type="radio" id="s-tarjoilu" name="segmentti" value="tarjoilu" required><label for="s-tarjoilu">Tarjoilu myyntipisteessä</label></div>
+              <div class="radio"><input type="radio" id="s-pitat" name="segmentti" value="pitat"><label for="s-pitat">Lämmitettävät pitat</label></div>
+              <div class="radio"><input type="radio" id="s-kauppa" name="segmentti" value="kauppa"><label for="s-kauppa">Kaupan hylly</label></div>
+              <div class="radio"><input type="radio" id="s-eos" name="segmentti" value="eos"><label for="s-eos">En ole vielä varma</label></div>
+            </div>
+            <p class="prefill-note" id="prefillNote" aria-live="polite"></p>
+            <span class="err" id="e-seg">Valitse myyntipisteen tyyppi.</span>
+          </fieldset>
+
+          <div class="form-row">
+            <div class="field"><label for="f-paikka">Paikkakunta <span class="req" aria-hidden="true">*</span></label><input id="f-paikka" name="paikkakunta" type="text" autocomplete="address-level2" required aria-describedby="e-paikka"><span class="err" id="e-paikka">Kirjoita paikkakunta.</span></div>
+          </div>
+          <div class="field"><label for="f-viesti">Viesti <span class="opt">(valinnainen)</span></label><textarea id="f-viesti" name="viesti" placeholder="Esim. myyntipisteen koko, nykyiset laitteet tai materiaalitilaus"></textarea></div>
+
+          <p class="privacy">Käsittelemme tietojasi <a href="https://mrpanini.fi/app/uploads/2023/02/tietosuojakaxxytaxxntoxx-fin.pdf">tietosuojakäytäntömme</a> mukaisesti. <span class="warn"><span aria-hidden="true">⚠</span> Lomakkeen vastaanottaja vahvistettava</span></p>
+          <button type="submit" class="btn btn-primary">Lähetä yhteydenotto</button>
+        </form>
+        <div class="thanks" id="thanks" tabindex="-1" role="status">
+          <div class="thanks__icon" aria-hidden="true"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#1c1111" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></div>
+          <h3 style="font-size:1.25rem">Kiitos yhteydenotostasi!</h3>
+          <p id="thanksText">Otamme sinuun yhteyttä mahdollisimman pian.</p>
+          <p class="warn"><span aria-hidden="true">⚠</span><span>Prototyyppi: lomaketta ei lähetetty minnekään.</span></p>
+          <p style="margin-top:1rem"><button type="button" class="btn btn-ghost" id="resetForm">Täytä uudelleen</button></p>
+        </div>
+      </div>
+
+      <aside class="aside-contact" aria-labelledby="aside-h">
+        <h3 id="aside-h">Mieluummin suoraan?</h3>
+        <p>Voit ottaa yhteyttä myös asiakaspalveluumme.</p>
+        <dl>
+          <div><dt>Sähköposti</dt><dd><a href="mailto:asiakaspalvelu@panini.fi">asiakaspalvelu@panini.fi</a></dd></div>
+          <div><dt>Puhelin</dt><dd><a href="tel:+358977495730">(09) 7749 5730</a></dd></div>
+          <div><dt>Myyntikonttori</dt><dd>Jäspilänkatu 27, 04250 Kerava</dd></div>
+        </dl>
+      </aside>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<svg class="footer-wave" viewBox="0 0 1440 227" preserveAspectRatio="none" aria-hidden="true"><path d="M920.28 45.99c82.09 0 94.86-43.08 169.13-43.08 98.58 0 110.7 45.31 169.02 36.38 59.04-9.05 68.75-30.87 124.7-30.87 55.94 0 81.23 23.47 103.39 33.35v184.63H-37.39c-2.19-77.73-1.19-184.63-1.19-184.63s4.4-11.92 49.27-23.93c49.9-13.35 83.23-10.75 119.18-2.33l43.24 17.06c34.37 8.06 68.19 11.09 101.91.58 27.38-8.54 60.8-28.9 93.92-30.24 94.71-3.73 149.2 37.98 215.23 36.38 59.71-1.43 92.73-39.31 162.64-39.31 96.59 0 117.75 45.99 173.45 45.99" fill="#CC1717"/></svg>
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div class="footer-logo"><img src="https://mrpanini.fi/app/themes/mrpanini-fi/dist/images/logo.png" alt="Mr. Panini" width="100" height="136" loading="lazy"></div>
+    <div>
+      <h6>Mr. Panini</h6>
+      <div class="social">
+        <a href="https://www.facebook.com/MrPanini/" aria-label="Facebook"><svg width="16" height="16" viewBox="0 0 24 24" fill="#fff"><path d="M14 8V6c0-.8.2-1.3 1.4-1.3H17V1.2C16.7 1.1 15.6 1 14.4 1 11.8 1 10 2.6 10 5.5V8H7v3.6h3V23h4V11.6h3l.5-3.6H14z"/></svg></a>
+        <a href="https://www.instagram.com/mrpaninisuomi/" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8" fill="#fff"/></svg></a>
+        <a href="https://www.youtube.com/channel/UCFplz0pi9P9mhXRvdA5XUpw" aria-label="YouTube"><svg width="16" height="16" viewBox="0 0 24 24" fill="#fff"><path d="M23 7.2s-.2-1.6-.9-2.3c-.9-.9-1.9-.9-2.3-1C16.6 3.6 12 3.6 12 3.6s-4.6 0-7.8.3c-.4.1-1.4.1-2.3 1C1.2 5.6 1 7.2 1 7.2S.8 9 .8 10.9v1.8c0 1.9.2 3.7.2 3.7s.2 1.6.9 2.3c.9.9 2 .9 2.5 1 1.8.2 7.6.2 7.6.2s4.6 0 7.8-.3c.4-.1 1.4-.1 2.3-1 .7-.7.9-2.3.9-2.3s.2-1.9.2-3.7v-1.8C23.2 9 23 7.2 23 7.2zM9.7 14.8V8.4l6.1 3.2-6.1 3.2z"/></svg></a>
+      </div>
+    </div>
+    <div>
+      <h6>Myyntikonttori</h6>
+      <address>Jäspilänkatu 27<br>04250 KERAVA<br>Puh. (09) 7749 5730<br><a href="mailto:asiakaspalvelu@panini.fi">asiakaspalvelu@panini.fi</a></address>
+    </div>
+    <div><a class="btn btn-primary" href="https://mrpanini.fi/tuotteet/">Tuotteet</a></div>
+    <ul>
+      <li><a href="https://mrpanini.fi/app/uploads/2023/02/tietosuojakaxxytaxxntoxx-fin.pdf">Tietosuojakäytäntö</a></li>
+      <li><a href="https://www.oivahymy.fi/yrityshaku?hakusana=mr.%20panini">Oiva-raportti</a></li>
+      <li><a href="https://mrpanini.fi/app/uploads/2026/03/qualitysyscert-iso9001-col.png">ISO 9001 -sertifikaatti</a></li>
+      <li><a href="https://mrpanini.fi/app/uploads/2026/03/foodsafetysyscert-fssc22000-col.png">FSSC 22000 -sertifikaatti</a></li>
+      <li><a href="https://mrpanini.fi/evasteseloste/">Evästeseloste</a></li>
+      <li><a href="https://mrpanini.fi/snellman-konsernin-ilmoituskanava/">Snellman-konsernin ilmoituskanava</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var SEG_LABELS={tarjoilu:'Tarjoilu myyntipisteessä',pitat:'Lämmitettävät pitat',kauppa:'Kaupan hylly',eos:'En ole vielä varma'};
+  var form=document.getElementById('leadForm');
+  var contact=document.getElementById('yhteydenotto');
+  var note=document.getElementById('prefillNote');
+
+  // Mobiilivalikko
+  var toggle=document.querySelector('.nav-toggle'),nav=document.getElementById('mainNav');
+  toggle.addEventListener('click',function(){
+    var open=nav.classList.toggle('open');
+    toggle.setAttribute('aria-expanded',open);
+  });
+
+  // ⚠-merkintöjen näyttö
+  var warnBtn=document.getElementById('toggleWarn');
+  warnBtn.addEventListener('click',function(){
+    var hidden=document.body.classList.toggle('hide-warn');
+    warnBtn.setAttribute('aria-pressed',!hidden);
+    warnBtn.textContent=hidden?'Näytä ⚠-merkinnät':'Piilota ⚠-merkinnät';
+  });
+
+  // Segmentin esivalinta
+  function preselect(seg,topic){
+    if(!SEG_LABELS[seg])return;
+    var r=form.querySelector('input[name="segmentti"][value="'+seg+'"]');
+    if(r){r.checked=true;document.getElementById('segField').classList.remove('invalid');}
+    note.textContent='Valittu: '+SEG_LABELS[seg]+'. Voit vaihtaa valintaa.';
+    note.classList.add('show');
+    if(topic==='parila'){
+      var msg=document.getElementById('f-viesti');
+      if(!msg.value)msg.value='Haluaisin tarjouksen Hendi-parilasta.';
+    }
+  }
+  function goToContact(){
+    contact.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
+    setTimeout(function(){document.getElementById('f-nimi').focus({preventScroll:true});},500);
+  }
+  function parseHash(){
+    var m=location.hash.match(/^#yhteydenotto\?segmentti=([a-z]+)/);
+    if(m){preselect(m[1]);goToContact();}
+  }
+  document.querySelectorAll('[data-segment]').forEach(function(a){
+    a.addEventListener('click',function(e){
+      e.preventDefault();
+      preselect(a.dataset.segment,a.dataset.topic);
+      history.replaceState(null,'','#yhteydenotto?segmentti='+a.dataset.segment);
+      goToContact();
+    });
+  });
+  window.addEventListener('hashchange',parseHash);
+  parseHash();
+
+  // Aktiivinen kohta sticky-navissa
+  var links=[].slice.call(document.querySelectorAll('.subnav a'));
+  var map={};links.forEach(function(l){map[l.dataset.target]=l;});
+  var visible={};
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(en){visible[en.target.id]=en.isIntersecting;});
+    var current=null;
+    links.forEach(function(l){if(visible[l.dataset.target]&&!current)current=l.dataset.target;});
+    links.forEach(function(l){
+      var on=l.dataset.target===current;
+      l.classList.toggle('is-active',on);
+      if(on){l.setAttribute('aria-current','true');
+        var ul=l.closest('ul'),lr=l.getBoundingClientRect(),ur=ul.getBoundingClientRect();
+        if(lr.left<ur.left||lr.right>ur.right)ul.scrollTo({left:l.offsetLeft-16,behavior:'smooth'});
+      }else l.removeAttribute('aria-current');
+    });
+  },{rootMargin:'-35% 0px -60% 0px'});
+  Object.keys(map).forEach(function(id){var el=document.getElementById(id);if(el)io.observe(el);});
+
+  // Materiaalisuodatin
+  var fbtns=document.querySelectorAll('.filters button');
+  fbtns.forEach(function(b){
+    b.addEventListener('click',function(){
+      fbtns.forEach(function(x){x.setAttribute('aria-pressed',x===b);});
+      document.querySelectorAll('.material').forEach(function(m){
+        m.hidden=!(b.dataset.filter==='all'||m.dataset.cat===b.dataset.filter);
+      });
+    });
+  });
+
+  // Lomake (prototyyppi: ei oikeaa lähetystä)
+  function validate(){
+    var ok=true,first=null;
+    ['f-nimi','f-yritys','f-email','f-paikka'].forEach(function(id){
+      var i=document.getElementById(id),f=i.closest('.field');
+      var bad=!i.value.trim()||(i.type==='email'&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(i.value.trim()));
+      f.classList.toggle('invalid',bad);i.setAttribute('aria-invalid',bad);
+      if(bad){ok=false;first=first||i;}
+    });
+    var seg=form.querySelector('input[name="segmentti"]:checked');
+    document.getElementById('segField').classList.toggle('invalid',!seg);
+    if(!seg){ok=false;first=first||form.querySelector('input[name="segmentti"]');}
+    if(first)first.focus();
+    return ok;
+  }
+  form.addEventListener('input',function(e){
+    var f=e.target.closest('.field');
+    if(f&&f.classList.contains('invalid')&&e.target.value.trim()){f.classList.remove('invalid');e.target.removeAttribute('aria-invalid');}
+  });
+  form.addEventListener('change',function(e){if(e.target.name==='segmentti')document.getElementById('segField').classList.remove('invalid');});
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    if(!validate())return;
+    var seg=form.querySelector('input[name="segmentti"]:checked').value;
+    var name=document.getElementById('f-nimi').value.trim().split(' ')[0];
+    document.getElementById('thanksText').textContent='Kiitos, '+name+'! Saimme yhteydenottosi ('+SEG_LABELS[seg]+'). Otamme sinuun yhteyttä mahdollisimman pian.';
+    form.style.display='none';
+    var t=document.getElementById('thanks');t.classList.add('show');t.focus();
+  });
+  document.getElementById('resetForm').addEventListener('click',function(){
+    form.reset();note.classList.remove('show');
+    document.getElementById('thanks').classList.remove('show');
+    form.style.display='';document.getElementById('f-nimi').focus();
+  });
+})();
+</script>
+</body>
+</html>
